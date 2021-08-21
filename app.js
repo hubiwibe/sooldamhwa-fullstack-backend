@@ -7,7 +7,6 @@ import helmet from 'helmet';
 import usersRouter from './routes/users.js';
 import { sequelize } from './db/database.js';
 import { config } from './config.js';
-import { getAll } from './data/user.js';
 
 const app = express();
 
@@ -32,7 +31,6 @@ app.use((error, req, res, next) => {
 });
 
 sequelize.sync().then(() => {
-  getAll().then(users => console.log(users));
   app.listen(config.host.port);
 });
 
