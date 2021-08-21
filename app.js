@@ -4,7 +4,6 @@ import logger from 'morgan';
 import cors from 'cors';
 import helmet from 'helmet';
 
-import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
 import { sequelize } from './db/database.js';
 import { config } from './config.js';
@@ -19,7 +18,6 @@ app.use(cookieParser());
 app.use(cors());
 app.use(helmet());
 
-app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
