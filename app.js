@@ -1,11 +1,14 @@
 import express, { json, urlencoded } from 'express';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import cors from 'cors';
+import helmet from 'helmet';
 
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
-import cors from 'cors';
-import helmet from 'helmet';
+import { sequelize } from './db/database.js';
+import { config } from './config.js';
+import { getAll } from './data/user.js';
 
 const app = express();
 
@@ -28,6 +31,11 @@ app.use((req, res, next) => {
 app.use((error, req, res, next) => {
   console.error(error);
   res.sendStatus(500);
+});
+
+sequelize.sync().then(() => {
+  getAll().then(users => console.log(users));
+  app.listen(config.host.port);
 });
 
 export default app;
